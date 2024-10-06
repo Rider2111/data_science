@@ -106,5 +106,7 @@ logging.info(f"Sum of Squares Error (SSE) (Homemade): {sse}")
 
 logging.info(f"SST = SSR + SSE : {sst} = {ssr + sse}")
 
+logging.info(f'R^2 = ssr/sst : R^2 = {ssr/sst}')
+
 plt.suptitle("SAT VS GPA")
 plt.show()
