@@ -31,7 +31,7 @@ y1 = [0.6439 + x*0.0014 for x in x_sat]
 y2 = [0.6439 + 0.2226 + x*0.0014 for x in x_sat]
 plt.plot(x_sat, y1, color = 'r')
 plt.plot(x_sat, y2, color = 'g')
-# plt.show()
+plt.show()
 
 exp = {
     'const':1,

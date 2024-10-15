@@ -6,6 +6,7 @@ import sys;
 import statsmodels.api as sm
 import logging
 import math
+from sklearn.linear_model import LinearRegression
 
 # Inital
 if len(sys.argv) != 2:
@@ -47,17 +48,22 @@ plt.xlabel("SAT")
 plt.ylabel("GPA")
 
 
-# OLS regression
-result = sm.OLS(y_gpa,sm.add_constant(x_sat)).fit()
-logging.info(f"OLS summary:\n{result.summary()}")
-ols_y_gpa = []
+# SkLearn regression
+x_sat_matrix = x_sat.values.reshape(-1,1)
+reg = LinearRegression()
+reg.fit(x_sat_matrix,y_gpa)
+r_squared_value = reg.score(x_sat_matrix,y_gpa)
+sklearn_slope = reg.coef_
+sklearn_intercept = reg.intercept_
+logging.info(f"SkLearn Values\nR-Squared: {r_squared_value}\nSlope: {sklearn_slope}\nIntercept: {sklearn_intercept}")
+sklearn_y_gpa = []
 for value in x_sat:
-    ols_y_gpa.append(0.0017 * value + 0.2750)
+    sklearn_y_gpa.append(sklearn_slope * value + sklearn_intercept)
 
 plt.subplot(2,3,3)
 plt.scatter(x_sat, y_gpa)
-plt.plot(x_sat, ols_y_gpa, color = 'y')
-plt.title("OLS Regression")
+plt.plot(x_sat, sklearn_y_gpa, color = 'y')
+plt.title("SkLearn Regression")
 plt.xlabel("SAT")
 plt.ylabel("GPA")
 
