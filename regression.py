@@ -18,3 +18,12 @@ def get_slope_and_intercept(xs: ndarray, ys: ndarray):
     m = (n*sum_xy - sum_x*sum_y)/(n*sum_x2 - math.pow(sum_x,2))
     b = (sum_y - m*sum_x)/n
     return (m,b)
+
+'''
+2 feature (Independent variable)
+1 target (Dependent variable)
+'''
+def adjusted_r_squared_value(r_square, n_observation, n_predictor):
+    temp = (n_observation - 1)/(n_observation - n_predictor - 1)
+    return 1 - (1 - r_square) * temp
+
