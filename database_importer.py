@@ -23,7 +23,7 @@ def get_query(file_path:str, table_name:str):
     first_line = file.readline()
     column_names = [to_snake_case(element.strip()) for element in first_line.split(',')]
     max_length = [0 for _ in column_names]
-    data_query = []
+    data_queries = []
     data_collector = []
     counter = 0
     for line in file:
@@ -39,16 +39,16 @@ def get_query(file_path:str, table_name:str):
             counter += 1
             if counter == 10:
                 aggregated_data = ",".join([f"({data})" for data in data_collector])
-                data_query.append(f"INSERT INTO {table_name} VALUES{aggregated_data}")
+                data_queries.append(f"INSERT INTO {table_name} VALUES{aggregated_data}")
                 counter = 0
     table_def = ','.join([f'{name} varchar({size})' for name, size in zip(column_names, max_length)])
     file.close()
-    return (f"CREATE TABLE IF NOT EXISTS {table_name}({table_def})", data_query)
+    return (f"CREATE TABLE IF NOT EXISTS {table_name}({table_def})", data_queries)
 
-table_query, data_query= get_query(file_path, table_name)
+table_query, data_queries= get_query(file_path, table_name)
 
 cursor.execute(table_query)
-for data_query in data_query:
+for data_query in data_queries:
     cursor.execute(data_query)
 connection.commit()
 
