@@ -39,10 +39,10 @@ validation_inputs, validation_target = next(iter(mnist_validation))
 
 # Creating model - 2 hidden layer with 50 nodes each
 flattened_input = tf.keras.layers.Flatten(input_shape=(28, 28, 1))
-first_hidden_layer = tf.keras.layers.Dense(50, activation="relu")
-second_hidden_layer = tf.keras.layers.Dense(50, activation="relu")
+first_hidden_layer = tf.keras.layers.Dense(1000, activation="relu")
+second_hidden_layer = tf.keras.layers.Dense(1000, activation="relu")
 output_layer = tf.keras.layers.Dense(10, activation="softmax")
-model = tf.keras.Sequential([flattened_input, first_hidden_layer, second_hidden_layer])
+model = tf.keras.Sequential([flattened_input, first_hidden_layer, second_hidden_layer, output_layer])
 
 # Compiling
 model.compile(optimizer="adam",loss="sparse_categorical_crossentropy", metrics=['accuracy'])
